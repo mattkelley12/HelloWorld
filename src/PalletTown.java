@@ -10,11 +10,11 @@ public class PalletTown {
 
         Pokemon squirtle = new Pokemon("007", "Squirtle","1'08\"", 19.8, PokemonType.Water );
 
-        System.out.println(squirtle.toString());
-        System.out.println(String.format("Hi my name is %s and my Pokedex number is #%s and my type is %s",
-                charmander.name, charmander.pokedexNumber, charmander.getType()));
+        System.out.println(squirtle);
+        System.out.printf("Hi my name is %s and my Pokedex number is #%s and my type is %s%n",
+                charmander.name, charmander.pokedexNumber, charmander.getType());
 
-        System.out.println(squirtle.toString());
+        System.out.println(squirtle);
 
 
 
