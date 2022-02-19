@@ -1,15 +1,12 @@
 package Services;
-import Pokemon.Pokemon;
+import Pokemon.PokemonBase;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class PokemonService {
     // Instance variables
-    private HashMap<String,Pokemon> pokedex;
+    private HashMap<String, PokemonBase> pokedex;
 
     // Constructor
     public PokemonService(){
@@ -19,15 +16,15 @@ public class PokemonService {
     // Initialize pokedex
     private void pokedexInitialize(List<List<String>> pokedexArray){
         // Initialize HashMap/Dictionary
-        HashMap<String,Pokemon> pokedex = new HashMap<String, Pokemon>();
+        HashMap<String, PokemonBase> pokedex = new HashMap<String, PokemonBase>();
 
         // Parse array into HashMap of PokemonObjects
         List<String> currentPokemon;
-        Pokemon currentPokemonObj;
+        PokemonBase currentPokemonObjBase;
         for (int i = 1; i < pokedexArray.size(); i++) {
             currentPokemon = pokedexArray.get(i);
             // Create pokemon object
-            currentPokemonObj = new Pokemon(
+            currentPokemonObjBase = new PokemonBase(
                     Integer.parseInt(currentPokemon.get(0)), // pokedexNumber
                     currentPokemon.get(1),
                     currentPokemon.get(2),
@@ -42,13 +39,13 @@ public class PokemonService {
                     Integer.parseInt(currentPokemon.get(11)),
                     Boolean.parseBoolean(currentPokemon.get(12)));
             // Add to dictionary
-            pokedex.put(currentPokemon.get(1),currentPokemonObj);
+            pokedex.put(currentPokemon.get(1), currentPokemonObjBase);
         }
         this.pokedex = pokedex;
     }
 
     // Pokedex getter
-    public Pokemon getPokemon(String pokemonName){
+    public PokemonBase getPokemon(String pokemonName){
         return pokedex.get(pokemonName);
     }
 
