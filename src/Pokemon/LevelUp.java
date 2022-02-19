@@ -2,24 +2,29 @@ package Pokemon;
 
 public class LevelUp {
 
-    public static int levelUpHP(int currentLevel,int numLevels, int currentHP, int IV){
+    public static int levelUpHP(int level,int numLevels, int baseHP, int IV){
         if (numLevels < 1){
-            return currentHP;
+            return baseHP;
         }
-        int newHP = currentHP;
+        int newHP = baseHP;
+        int currentLevel = level;
         for (int i = 0; i < numLevels; i++) {
-            newHP = ((2*currentHP+IV)*currentLevel)/100+currentLevel+10;
+            currentLevel++;
+            newHP = ((2*baseHP+IV)*currentLevel)/100+currentLevel+10;
         }
         return  newHP;
     }
 
-    public static int levelUpStat(int currentLevel,int numLevels, int currentStat, int IV){
+    public static int levelUpStat(int level,int numLevels, int baseStat, int IV){
         if (numLevels < 1){
-            return currentStat;
+            return baseStat;
         }
-        int newStat = currentStat;
+        int newStat = baseStat;
+        int currentLevel = level;
         for (int i = 0; i < numLevels; i++) {
-            newStat = ((2*currentStat+IV)*currentLevel)/100+5;
+            currentLevel++;
+            newStat = ((2*baseStat+IV)*currentLevel)/100+5;
+            System.out.println("");
         }
         return  newStat;
     }

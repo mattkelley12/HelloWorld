@@ -58,12 +58,12 @@ public class Pokemon {
         // Battle Stats
         this.level = level;
         this.expPoints = getExpPoints(level);
-        this.hp = LevelUp.levelUpHP(level,level-5,pokemonBase.getHp(),IVspeed);
-        this.attack = LevelUp.levelUpStat(level,level-5,pokemonBase.getAttack(),IVattack);
-        this.defense = LevelUp.levelUpStat(level,level-5,pokemonBase.getDefense(),IVdefense);
-        this.spAttack = LevelUp.levelUpStat(level,level-5,pokemonBase.getSpAttack(),IVspAttack);
-        this.spDefense = LevelUp.levelUpStat(level,level-5,pokemonBase.getSpDefense(),IVspDefense);
-        this.speed = LevelUp.levelUpStat(level,level-5,pokemonBase.getSpeed(),IVspeed);
+        this.hp = LevelUp.levelUpHP(5,level-5,pokemonBase.getHp(),IVspeed);
+        this.attack = LevelUp.levelUpStat(5,level-5,pokemonBase.getAttack(),IVattack);
+        this.defense = LevelUp.levelUpStat(5,level-5,pokemonBase.getDefense(),IVdefense);
+        this.spAttack = LevelUp.levelUpStat(5,level-5,pokemonBase.getSpAttack(),IVspAttack);
+        this.spDefense = LevelUp.levelUpStat(5,level-5,pokemonBase.getSpDefense(),IVspDefense);
+        this.speed = LevelUp.levelUpStat(5,level-5,pokemonBase.getSpeed(),IVspeed);
         this.total = this.level+this.expPoints+this.hp+this.attack+this.defense+this.spAttack+this.spDefense+this.speed;
     }
 
