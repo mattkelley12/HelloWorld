@@ -90,6 +90,20 @@ public class Pokemon {
         return (int) Math.pow(level,3);
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Pokemon{" +
+                "name='" + name + '\'' +
+                ", type1='" + type1 + '\'' +
+                ", type2='" + type2 + '\'' +
+                ", gender='" + gender + '\'' +
+                ", level=" + level +
+                ", hp=" + hp +
+                ", attack=" + attack +
+                ", defense=" + defense +
+                ", spAttack=" + spAttack +
+                ", spDefense=" + spDefense +
+                ", speed=" + speed +
+                '}';
+    }
 }
