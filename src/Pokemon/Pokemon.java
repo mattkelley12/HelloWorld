@@ -45,7 +45,7 @@ public class Pokemon {
         this.generation = pokemonBase.getGeneration();
         this.legendary = pokemonBase.isLegendary();
         // Individual Stats
-        this.gender = generateGender();
+        this.gender = generateGender(pokemonBase.getPercentMale());
         this.trainerID = null;
         this.isShiny = generateShiny();
         // IVs
@@ -68,9 +68,13 @@ public class Pokemon {
     }
 
     // Helper Methods
-    private String generateGender(){
-        int random = new Random().nextInt(2);
-        if (random == 1){
+    private String generateGender(double percentageMale){
+        // Return null if genderless
+        if (percentageMale == -1){
+            return null;
+        }
+        int random = new Random().nextInt(10000);
+        if (random < (int) percentageMale*100){
             return "male";
         }
         return "female";
@@ -90,6 +94,102 @@ public class Pokemon {
         return (int) Math.pow(level,3);
     }
 
+    public int getPokedexNumber() {
+        return pokedexNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getType1() {
+        return type1;
+    }
+
+    public String getType2() {
+        return type2;
+    }
+
+    public int getGeneration() {
+        return generation;
+    }
+
+    public boolean isLegendary() {
+        return legendary;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public Integer getTrainerID() {
+        return trainerID;
+    }
+
+    public boolean isShiny() {
+        return isShiny;
+    }
+
+    public int getIVhp() {
+        return IVhp;
+    }
+
+    public int getIVattack() {
+        return IVattack;
+    }
+
+    public int getIVdefense() {
+        return IVdefense;
+    }
+
+    public int getIVspAttack() {
+        return IVspAttack;
+    }
+
+    public int getIVspDefense() {
+        return IVspDefense;
+    }
+
+    public int getIVspeed() {
+        return IVspeed;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getExpPoints() {
+        return expPoints;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public int getSpAttack() {
+        return spAttack;
+    }
+
+    public int getSpDefense() {
+        return spDefense;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
     @Override
     public String toString() {
         return "Pokemon{" +
@@ -104,6 +204,7 @@ public class Pokemon {
                 ", spAttack=" + spAttack +
                 ", spDefense=" + spDefense +
                 ", speed=" + speed +
+                ", shiny=" + isShiny +
                 '}';
     }
 }

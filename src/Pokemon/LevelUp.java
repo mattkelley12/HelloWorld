@@ -24,7 +24,6 @@ public class LevelUp {
         for (int i = 0; i < numLevels; i++) {
             currentLevel++;
             newStat = ((2*baseStat+IV)*currentLevel)/100+5;
-            System.out.println("");
         }
         return  newStat;
     }

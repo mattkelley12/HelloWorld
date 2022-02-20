@@ -10,7 +10,7 @@ import java.util.List;
 public class PokedexDAO {
 
     // Instance variables
-    private File pokedexFile = new File("src/Storage/pokemon.csv");
+    private File pokedexFile = new File("src/Storage/pokemonComplete.csv");
 
     public List<List<String>> readPokedexFile() {
         // Initialize list
@@ -30,4 +30,5 @@ public class PokedexDAO {
         }
         return pokedex;
     }
+
 }
