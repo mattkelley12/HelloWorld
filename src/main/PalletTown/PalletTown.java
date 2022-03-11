@@ -10,7 +10,7 @@ public class PalletTown {
         PokemonService pokedex = new PokemonService();
         EvolutionService evoService = new EvolutionService("gen1Evolutions.csv");
 
-        System.out.println(evoService.getEvolution(17));
+        System.out.println(evoService.getEvolution(133));
 
     }
 
