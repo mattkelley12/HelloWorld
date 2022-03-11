@@ -7,12 +7,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PokedexDAO {
+public class csvDAO {
+    private String fileName;
+    private InputStreamReader isr;
 
-    // Instance variables
-    InputStream is = this.getFileAsIOStream("pokemonComplete.csv");
-    InputStreamReader isr = new InputStreamReader(is);
+    public csvDAO(String fileName){
+        this.fileName = fileName;
+        this.isr = setInputStreamReader(fileName);
+    }
 
+    private InputStreamReader setInputStreamReader(String fileName){
+        InputStream is = this.getFileAsIOStream(fileName);
+        return new InputStreamReader(is);
+    }
 
     public List<List<String>> readPokedexFile() {
         // Initialize list
@@ -28,7 +35,7 @@ public class PokedexDAO {
         }
         // Handle FileNotFoundException
         catch (IOException e){
-            throw new PokedexFileNotFoundException("Unable to find pokedex.csv file!");
+            throw new PokedexFileNotFoundException(String.format("Unable to find %s file!",fileName));
         }
         return pokedex;
     }

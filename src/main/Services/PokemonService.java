@@ -1,5 +1,5 @@
 package Services;
-import DAO.PokedexDAO;
+import DAO.csvDAO;
 import Pokemon.PokemonBase;
 
 import java.util.HashMap;
@@ -11,7 +11,7 @@ public class PokemonService {
 
     // Constructor
     public PokemonService(){
-        pokedexInitialize(new PokedexDAO().readPokedexFile());
+        pokedexInitialize(new csvDAO("pokemonComplete.csv").readPokedexFile());
     }
 
     // Initialize pokedex
