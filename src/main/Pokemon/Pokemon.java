@@ -233,6 +233,8 @@ public class Pokemon {
         this.total = this.level+this.expPoints+this.hp+this.attack+this.defense+this.spAttack+this.spDefense+this.speed;
     }
 
+    // Private methods
+
     private void evolve(Evolution evolution) {
         while(evolutionService.evolvesNextLevel(pokedexNumber,level)) {
             // Get base evolve pokemon
