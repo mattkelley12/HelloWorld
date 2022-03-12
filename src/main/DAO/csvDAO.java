@@ -29,7 +29,8 @@ public class csvDAO {
         try (BufferedReader br = new BufferedReader(isr)) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
+                //String[] values = line.split(",");
+                String[] values = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
                 pokedex.add(Arrays.asList(values));
             }
         }

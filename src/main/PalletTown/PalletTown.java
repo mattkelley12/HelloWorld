@@ -2,6 +2,7 @@ package PalletTown;
 
 import Pokemon.Pokemon;
 import Services.EvolutionService;
+import Services.MoveService;
 import Services.PokemonService;
 
 public class PalletTown {
@@ -9,6 +10,7 @@ public class PalletTown {
     public static void main(String[] args) {
         PokemonService pokedex = new PokemonService();
         EvolutionService evoService = new EvolutionService("gen1Evolutions.csv");
+        MoveService moveService = new MoveService("moves.csv");
 
         System.out.println(evoService.getEvolution(133));
 
