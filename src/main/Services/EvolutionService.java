@@ -26,7 +26,7 @@ public class EvolutionService {
             return false;
         }
         // If next level is evo level
-        else if (pokemonEvo.getLevel() == nextLevel){
+        else if (pokemonEvo.getLevel() <= nextLevel){
             return true;
         }
         // Not eligible yet

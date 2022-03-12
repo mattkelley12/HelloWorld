@@ -19,6 +19,8 @@ public class PalletTown {
         System.out.println(charmander.toString());
         charmander.levelUp(1);
         System.out.println(charmander.toString());
+        charmander.levelUp(20);
+        System.out.println(charmander.toString());
 
         System.out.println(bulbasaur.toString());
         bulbasaur.levelUp(1);

@@ -212,13 +212,18 @@ public class Pokemon {
         if (level == 100){
             return;
         }
+        else if (level + numLevels > 100){
+            this.level = 100;
+        }
+        else {
+            this.level += numLevels;
+        }
         // Check if pokemon evolves
-        if (evolutionService.evolvesNextLevel(pokedexNumber, level+numLevels)){
+        if (evolutionService.evolvesNextLevel(pokedexNumber, level)){
             // Evolve
             this.evolve(evolutionService.getEvolution(pokedexNumber));
             return;
         }
-        this.level++;
         this.hp = LevelUp.levelUpHP(level, numLevels, pokemonBase.getHp(), IVhp);
         this.attack = LevelUp.levelUpStat(level,numLevels,pokemonBase.getAttack(),IVattack);
         this.defense = LevelUp.levelUpStat(level,numLevels,pokemonBase.getDefense(),IVdefense);
@@ -229,26 +234,28 @@ public class Pokemon {
     }
 
     private void evolve(Evolution evolution) {
-        // Get base evolve pokemon
-        PokemonBase evolvePokemon = pokedex.getPokedexByNumber().get(evolution.getEvolution());
-        // Copy over stats
-        // Standard Stats
-        this.pokemonBase = evolvePokemon;
-        this.pokedexNumber = evolvePokemon.getPokedexNumber();
-        this.name = evolvePokemon.getName();
-        this.type1 = evolvePokemon.getType1();
-        this.type2 = evolvePokemon.getType2();
-        this.generation = evolvePokemon.getGeneration();
-        this.legendary = evolvePokemon.isLegendary();
-        // Battle Stats
-        this.level++;
-        this.hp = LevelUp.levelUpHP(5,level-5,pokemonBase.getHp(),IVspeed);
-        this.attack = LevelUp.levelUpStat(5,level-5,pokemonBase.getAttack(),IVattack);
-        this.defense = LevelUp.levelUpStat(5,level-5,pokemonBase.getDefense(),IVdefense);
-        this.spAttack = LevelUp.levelUpStat(5,level-5,pokemonBase.getSpAttack(),IVspAttack);
-        this.spDefense = LevelUp.levelUpStat(5,level-5,pokemonBase.getSpDefense(),IVspDefense);
-        this.speed = LevelUp.levelUpStat(5,level-5,pokemonBase.getSpeed(),IVspeed);
-        this.total = this.level+this.expPoints+this.hp+this.attack+this.defense+this.spAttack+this.spDefense+this.speed;
+        while(evolutionService.evolvesNextLevel(pokedexNumber,level)) {
+            // Get base evolve pokemon
+            PokemonBase evolvePokemon = pokedex.getPokedexByNumber().get(evolution.getEvolution());
+            // Copy over stats
+            // Standard Stats
+            this.pokemonBase = evolvePokemon;
+            this.pokedexNumber = evolvePokemon.getPokedexNumber();
+            this.name = evolvePokemon.getName();
+            this.type1 = evolvePokemon.getType1();
+            this.type2 = evolvePokemon.getType2();
+            this.generation = evolvePokemon.getGeneration();
+            this.legendary = evolvePokemon.isLegendary();
+            // Battle Stats
+            this.hp = LevelUp.levelUpHP(5, level - 5, pokemonBase.getHp(), IVspeed);
+            this.attack = LevelUp.levelUpStat(5, level - 5, pokemonBase.getAttack(), IVattack);
+            this.defense = LevelUp.levelUpStat(5, level - 5, pokemonBase.getDefense(), IVdefense);
+            this.spAttack = LevelUp.levelUpStat(5, level - 5, pokemonBase.getSpAttack(), IVspAttack);
+            this.spDefense = LevelUp.levelUpStat(5, level - 5, pokemonBase.getSpDefense(), IVspDefense);
+            this.speed = LevelUp.levelUpStat(5, level - 5, pokemonBase.getSpeed(), IVspeed);
+            this.total = this.level + this.expPoints + this.hp + this.attack + this.defense + this.spAttack + this.spDefense + this.speed;
+            evolution = evolutionService.getEvolution(pokedexNumber);
+        }
     }
 
 
