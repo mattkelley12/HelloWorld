@@ -7,24 +7,29 @@ import Pokemon.Pokemon;
 import Services.EvolutionService;
 import Services.MoveService;
 import Services.PokemonService;
+import Pokemon.PokemonMoveSet;
 
 public class PalletTown {
 
     public static void main(String[] args) {
         PokemonService pokedex = new PokemonService();
 
-        Pokemon charmander = pokedex.getPokemon("Charmander",15);
-        Pokemon bulbasaur = pokedex.getPokemon("Bulbasaur",15);
+//        Pokemon charmander = pokedex.getPokemon("Charmander",15);
+//        Pokemon bulbasaur = pokedex.getPokemon("Bulbasaur",15);
+//
+//        System.out.println(charmander.toString());
+//        charmander.levelUp(1);
+//        System.out.println(charmander.toString());
+//        charmander.levelUp(20);
+//        System.out.println(charmander.toString());
+//
+//        System.out.println(bulbasaur.toString());
+//        bulbasaur.levelUp(1);
+//        System.out.println(bulbasaur.toString());
 
-        System.out.println(charmander.toString());
-        charmander.levelUp(1);
-        System.out.println(charmander.toString());
-        charmander.levelUp(20);
-        System.out.println(charmander.toString());
-
-        System.out.println(bulbasaur.toString());
-        bulbasaur.levelUp(1);
-        System.out.println(bulbasaur.toString());
+        PokemonMoveSet test = pokedex.getMoveMapping().get(1);
+        System.out.println(pokedex.getMoveService().getMove(33));
+        System.out.println(pokedex.getMoveService().getMove(45));
 
 
     }

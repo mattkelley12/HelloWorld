@@ -1,9 +1,10 @@
 package Services;
 
+import DAO.MoveDAO;
 import DAO.PokemonDAO;
-import Pokemon.Evolution;
 import Pokemon.Pokemon;
 import Pokemon.PokemonBase;
+import Pokemon.PokemonMoveSet;
 
 import java.util.HashMap;
 
@@ -12,12 +13,14 @@ public class PokemonService {
     private HashMap<Integer,PokemonBase> pokedexByNumber;
     private EvolutionService evolutionService;
     private MoveService moveService;
+    private HashMap<Integer, PokemonMoveSet> moveMapping;
 
     public PokemonService(){
         this.pokedex = PokemonDAO.pokedexInitialize("pokemonComplete.csv");
         this.pokedexByNumber = PokemonDAO.pokedexByNumber(pokedex);
         this.evolutionService = new EvolutionService("gen1Evolutions.csv");
         this.moveService = new MoveService("moves.csv");
+        this.moveMapping = MoveDAO.moveMapping("pokemonMovesGen1.csv");
 
     }
 
@@ -37,4 +40,15 @@ public class PokemonService {
         return new Pokemon(pokedex.get(name),level,evolutionService, this);
     }
 
+    public HashMap<Integer, PokemonMoveSet> getMoveMapping() {
+        return moveMapping;
+    }
+
+    public EvolutionService getEvolutionService() {
+        return evolutionService;
+    }
+
+    public MoveService getMoveService() {
+        return moveService;
+    }
 }

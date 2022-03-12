@@ -1,7 +1,9 @@
 package DAO;
 
 import Pokemon.Move;
+import Pokemon.PokemonMoveSet;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,7 +27,6 @@ public class MoveDAO {
         Move currentMove;
         for (int i = 1; i < evolutionArray.size(); i++) {
             currentMoveString = evolutionArray.get(i);
-
             String name = currentMoveString.get(0);
             String type = currentMoveString.get(1);
             String category = currentMoveString.get(2);
@@ -38,7 +39,6 @@ public class MoveDAO {
             else {
                 power = Integer.parseInt(currentMoveString.get(4));
             }
-
             // Parse accuracy
             Integer accuracy;
             if (currentMoveString.get(5).equals("inf")){
@@ -50,7 +50,6 @@ public class MoveDAO {
             else {
                 accuracy = Integer.parseInt(currentMoveString.get(5));
             }
-
             // Parse PP
             Integer PP;
             if (currentMoveString.get(6).equals("-")){
@@ -82,17 +81,129 @@ public class MoveDAO {
                 probability = Integer.parseInt(currentMoveString.get(8));
             }
             int gen = Integer.parseInt(currentMoveString.get(9));
-
+            // New Properties
+            Integer ID;
+            if (currentMoveString.get(10).equals("-")) {
+                ID = null;
+            }
+            else {
+                ID = Integer.parseInt(currentMoveString.get(10));
+            }
+            Integer targetID;
+            if (currentMoveString.get(11).equals("-")) {
+                targetID = null;
+            }
+            else {
+                targetID = Integer.parseInt(currentMoveString.get(11));
+            }
+            Integer damageClassID;
+            if (currentMoveString.get(12).equals("-")) {
+                damageClassID = null;
+            }
+            else {
+                damageClassID = Integer.parseInt(currentMoveString.get(12));
+            }
+            Integer effectID;
+            if (currentMoveString.get(13).equals("-")) {
+                effectID = null;
+            }
+            else {
+                effectID = Integer.parseInt(currentMoveString.get(13));
+            }
+            Integer effectProb;
+            if (currentMoveString.get(14).equals("-")) {
+                effectProb = null;
+            }
+            else {
+                effectProb = Integer.parseInt(currentMoveString.get(14));
+            }
+            Integer contestTypeID;
+            if (currentMoveString.get(15).equals("-")) {
+                contestTypeID = null;
+            }
+            else {
+                contestTypeID = Integer.parseInt(currentMoveString.get(15));
+            }
+            Integer contestEffectID;
+            if (currentMoveString.get(16).equals("-")) {
+                contestEffectID = null;
+            }
+            else {
+                contestEffectID = Integer.parseInt(currentMoveString.get(16));
+            }
+            Integer superContestEffectID;
+            if (currentMoveString.get(17).equals("-")) {
+                superContestEffectID = null;
+            }
+            else {
+                superContestEffectID = Integer.parseInt(currentMoveString.get(17));
+            }
             // Create pokemon object
             currentMove = new Move(
                     name, type, category, power, accuracy, PP,
-            effect, probability, TM, gen
+                    effect, probability, TM, gen, ID, targetID, damageClassID,
+                    effectID, effectProb, contestTypeID, contestEffectID, superContestEffectID
             );
-
             // Add to dictionary
             moveHashMap.put(name, currentMove);
         }
         return moveHashMap;
+    }
+
+    public static HashMap<Integer, PokemonMoveSet> moveMapping(String fileName) {
+        List<List<String>> moveMappingStringArray = new csvDAO(fileName).readPokedexFile();
+        //     PokeDex#            Level        Moveset
+        HashMap<Integer, PokemonMoveSet> moveMapping = new HashMap<>();
+
+        List<String> currentPokemonMoveData = null;
+        ArrayList<Integer> moveList;
+        for (int i = 1; i < moveMappingStringArray.size(); i++) {
+            currentPokemonMoveData = moveMappingStringArray.get(i);
+            int pokemonNumber = Integer.parseInt(currentPokemonMoveData.get(0));
+            int versionGroupID = Integer.parseInt(currentPokemonMoveData.get(1));
+            int moveID = Integer.parseInt(currentPokemonMoveData.get(2));
+            int level = Integer.parseInt(currentPokemonMoveData.get(4));
+            int order;
+            if (currentPokemonMoveData.get(5).equals("-")){
+                order = 1;
+            }
+            else {
+                order = Integer.parseInt(currentPokemonMoveData.get(5));
+            }
+            System.out.println("order = " + order);
+            // Check if pokemon is not in moveMapping
+            if (moveMapping.get(pokemonNumber) == null) {
+                // Create new moves arraylist
+                ArrayList<Integer> moves = new ArrayList<>();
+                moves.add(-1);
+                moves.add(-1);
+                moves.add(-1);
+                moves.add(-1);
+                moves.set(order-1,moveID);
+                HashMap<Integer, ArrayList<Integer>> moveSet = new HashMap<>();
+                moveSet.put(level, moves);
+                PokemonMoveSet currentPokemon = new PokemonMoveSet(pokemonNumber, versionGroupID, moveSet);
+                moveMapping.put(pokemonNumber, currentPokemon);
+            } else {
+                PokemonMoveSet currentPokemon = moveMapping.get(pokemonNumber);
+
+                // Add to current level list
+                if (currentPokemon.getMoveMapping().get(level) != null) {
+                    currentPokemon.getMoveMapping().get(level).set( order - 1,moveID);
+                }
+                // If move doesn't exist at level, create new level list
+                else {
+                    ArrayList<Integer> moves = new ArrayList<>();
+                    moves.add(-1);
+                    moves.add(-1);
+                    moves.add(-1);
+                    moves.add(-1);
+                    moves.set(order - 1,moveID);
+                    currentPokemon.getMoveMapping().put(level, moves);
+                }
+            }
+        }
+        return moveMapping;
     }
 
 }
