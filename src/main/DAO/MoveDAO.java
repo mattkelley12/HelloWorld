@@ -1,7 +1,9 @@
 package DAO;
 
 import Pokemon.Move;
+import Pokemon.PokemonBase;
 import Pokemon.PokemonMoveSet;
+import Services.MoveService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -150,7 +152,7 @@ public class MoveDAO {
         return moveHashMap;
     }
 
-    public static HashMap<Integer, PokemonMoveSet> moveMapping(String fileName) {
+    public static HashMap<Integer, PokemonMoveSet> moveMapping(String fileName, HashMap<Integer, PokemonBase> pokedexByNumber, MoveService moveService) {
         List<List<String>> moveMappingStringArray = new csvDAO(fileName).readPokedexFile();
         //     PokeDex#            Level        Moveset
         HashMap<Integer, PokemonMoveSet> moveMapping = new HashMap<>();
@@ -170,35 +172,52 @@ public class MoveDAO {
             else {
                 order = Integer.parseInt(currentPokemonMoveData.get(5));
             }
-            System.out.println("order = " + order);
             // Check if pokemon is not in moveMapping
             if (moveMapping.get(pokemonNumber) == null) {
                 // Create new moves arraylist
                 ArrayList<Integer> moves = new ArrayList<>();
-                moves.add(-1);
-                moves.add(-1);
-                moves.add(-1);
-                moves.add(-1);
-                moves.set(order-1,moveID);
+                // If it is a moved learned by leveling up
+                if (level > 0) {
+                    moves.add(-1);
+                    moves.add(-1);
+                    moves.add(-1);
+                    moves.add(-1);
+                    moves.set(order-1,moveID);
+                }
+                // Move learned from TM, tutor, etc.
+                else {
+                    moves.add(moveID);
+                }
+
                 HashMap<Integer, ArrayList<Integer>> moveSet = new HashMap<>();
                 moveSet.put(level, moves);
-                PokemonMoveSet currentPokemon = new PokemonMoveSet(pokemonNumber, versionGroupID, moveSet);
+                PokemonMoveSet currentPokemon = new PokemonMoveSet(pokemonNumber, versionGroupID, moveSet,pokedexByNumber, moveService);
                 moveMapping.put(pokemonNumber, currentPokemon);
             } else {
                 PokemonMoveSet currentPokemon = moveMapping.get(pokemonNumber);
 
                 // Add to current level list
                 if (currentPokemon.getMoveMapping().get(level) != null) {
-                    currentPokemon.getMoveMapping().get(level).set( order - 1,moveID);
+                    if (level > 0) {
+                        currentPokemon.getMoveMapping().get(level).set(order - 1, moveID);
+                    }
+                    else {
+                        currentPokemon.getMoveMapping().get(level).add(moveID);
+                    }
                 }
                 // If move doesn't exist at level, create new level list
                 else {
                     ArrayList<Integer> moves = new ArrayList<>();
-                    moves.add(-1);
-                    moves.add(-1);
-                    moves.add(-1);
-                    moves.add(-1);
-                    moves.set(order - 1,moveID);
+                    if (order > 0) {
+                        moves.add(-1);
+                        moves.add(-1);
+                        moves.add(-1);
+                        moves.add(-1);
+                        moves.set(order - 1, moveID);
+                    }
+                    else {
+                        moves.add(moveID);
+                    }
                     currentPokemon.getMoveMapping().put(level, moves);
                 }
             }

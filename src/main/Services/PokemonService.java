@@ -20,7 +20,7 @@ public class PokemonService {
         this.pokedexByNumber = PokemonDAO.pokedexByNumber(pokedex);
         this.evolutionService = new EvolutionService("gen1Evolutions.csv");
         this.moveService = new MoveService("moves.csv");
-        this.moveMapping = MoveDAO.moveMapping("pokemonMovesGen1.csv");
+        this.moveMapping = MoveDAO.moveMapping("pokemonMovesGen1.csv",pokedexByNumber, moveService);
 
     }
 
