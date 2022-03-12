@@ -17,4 +17,22 @@ public class EvolutionService {
        return evolutionHashMap.get(pokemonNumber);
     }
 
+    // Methods
+
+    public boolean evolvesNextLevel(int pokemonNumber, int nextLevel){
+        Evolution pokemonEvo = evolutionHashMap.get(pokemonNumber);
+        // If Pokemon does not have evolution
+        if (pokemonEvo == null){
+            return false;
+        }
+        // If next level is evo level
+        else if (pokemonEvo.getLevel() == nextLevel){
+            return true;
+        }
+        // Not eligible yet
+        else {
+            return false;
+        }
+    }
+
 }

@@ -67,4 +67,12 @@ public class PokemonDAO {
         return pokedex;
     }
 
+    public static HashMap<Integer, PokemonBase> pokedexByNumber(HashMap<String, PokemonBase> pokedex){
+        HashMap<Integer, PokemonBase> pokedexByNumber = new HashMap<>();
+        for (PokemonBase pokemon : pokedex.values()) {
+            pokedexByNumber.put(pokemon.getPokedexNumber(), pokemon);
+        }
+        return pokedexByNumber;
+    }
+
 }

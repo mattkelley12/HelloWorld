@@ -13,4 +13,8 @@ public class MoveService {
         this.moveHashMap = MoveDAO.moveInitialize(fileName);
     }
 
+    public Move getMove(String move){
+        return moveHashMap.get(move);
+    }
+
 }

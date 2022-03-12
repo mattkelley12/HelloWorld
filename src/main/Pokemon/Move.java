@@ -8,7 +8,7 @@ public class Move {
     private Integer accuracy;
     private Integer PP;
     private String effect;
-    private Integer probability;
+    private Integer critProbability;
     private String TM;
     private int gen;
 
@@ -21,7 +21,7 @@ public class Move {
         this.accuracy = accuracy;
         this.PP = PP;
         this. effect = effect;
-        this.probability = probability;
+        this.critProbability = probability;
         this.TM = TM;
         this.gen = gen;
     }
@@ -54,8 +54,8 @@ public class Move {
         return effect;
     }
 
-    public Integer getProbability() {
-        return probability;
+    public Integer getCritProbability() {
+        return critProbability;
     }
 
     public String getTM() {
@@ -64,5 +64,21 @@ public class Move {
 
     public int getGen() {
         return gen;
+    }
+
+    @Override
+    public String toString() {
+        return "Move{" +
+                "name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", category='" + category + '\'' +
+                ", power=" + power +
+                ", accuracy=" + accuracy +
+                ", PP=" + PP +
+                ", effect='" + effect + '\'' +
+                ", probability=" + critProbability +
+                ", TM='" + TM + '\'' +
+                ", gen=" + gen +
+                '}';
     }
 }

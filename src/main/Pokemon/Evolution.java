@@ -19,6 +19,11 @@ public class Evolution {
 
     // Getters and Setters
 
+
+    public int getEvolution() {
+        return evolution;
+    }
+
     public int getLevel() {
         return level;
     }

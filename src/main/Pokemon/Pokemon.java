@@ -1,9 +1,16 @@
 package Pokemon;
 
+import Services.EvolutionService;
+import Services.MoveService;
+import Services.PokemonService;
 import java.util.Random;
 
 public class Pokemon {
     // Standard Stats
+    private PokemonBase pokemonBase;
+    private EvolutionService evolutionService;
+    private MoveService moveService;
+    private PokemonService pokedex;
     private int pokedexNumber;
     private String name;
     private String type1;
@@ -36,8 +43,12 @@ public class Pokemon {
     private int spDefense;
     private int speed;
 
-    public Pokemon(PokemonBase pokemonBase, int level){
+    public Pokemon(PokemonBase pokemonBase, int level, EvolutionService evolutionService, PokemonService pokedex){
         // Standard Stats
+        this.pokemonBase = pokemonBase;
+        this.evolutionService = evolutionService;
+        this.moveService = moveService;
+        this.pokedex = pokedex;
         this.pokedexNumber = pokemonBase.getPokedexNumber();
         this.name = pokemonBase.getName();
         this.type1 = pokemonBase.getType1();
@@ -189,6 +200,57 @@ public class Pokemon {
     public int getSpeed() {
         return speed;
     }
+
+    public PokemonBase getPokemonBase() {
+        return pokemonBase;
+    }
+
+    // Methods
+
+    public void levelUp(int numLevels){
+        // Do nothing if level 100
+        if (level == 100){
+            return;
+        }
+        // Check if pokemon evolves
+        if (evolutionService.evolvesNextLevel(pokedexNumber, level+numLevels)){
+            // Evolve
+            this.evolve(evolutionService.getEvolution(pokedexNumber));
+            return;
+        }
+        this.level++;
+        this.hp = LevelUp.levelUpHP(level, numLevels, pokemonBase.getHp(), IVhp);
+        this.attack = LevelUp.levelUpStat(level,numLevels,pokemonBase.getAttack(),IVattack);
+        this.defense = LevelUp.levelUpStat(level,numLevels,pokemonBase.getDefense(),IVdefense);
+        this.spAttack = LevelUp.levelUpStat(level,numLevels,pokemonBase.getSpAttack(),IVspAttack);
+        this.spDefense = LevelUp.levelUpStat(level,numLevels,pokemonBase.getSpDefense(),IVspDefense);
+        this.speed = LevelUp.levelUpStat(level,numLevels,pokemonBase.getSpeed(),IVspeed);
+        this.total = this.level+this.expPoints+this.hp+this.attack+this.defense+this.spAttack+this.spDefense+this.speed;
+    }
+
+    private void evolve(Evolution evolution) {
+        // Get base evolve pokemon
+        PokemonBase evolvePokemon = pokedex.getPokedexByNumber().get(evolution.getEvolution());
+        // Copy over stats
+        // Standard Stats
+        this.pokemonBase = evolvePokemon;
+        this.pokedexNumber = evolvePokemon.getPokedexNumber();
+        this.name = evolvePokemon.getName();
+        this.type1 = evolvePokemon.getType1();
+        this.type2 = evolvePokemon.getType2();
+        this.generation = evolvePokemon.getGeneration();
+        this.legendary = evolvePokemon.isLegendary();
+        // Battle Stats
+        this.level++;
+        this.hp = LevelUp.levelUpHP(5,level-5,pokemonBase.getHp(),IVspeed);
+        this.attack = LevelUp.levelUpStat(5,level-5,pokemonBase.getAttack(),IVattack);
+        this.defense = LevelUp.levelUpStat(5,level-5,pokemonBase.getDefense(),IVdefense);
+        this.spAttack = LevelUp.levelUpStat(5,level-5,pokemonBase.getSpAttack(),IVspAttack);
+        this.spDefense = LevelUp.levelUpStat(5,level-5,pokemonBase.getSpDefense(),IVspDefense);
+        this.speed = LevelUp.levelUpStat(5,level-5,pokemonBase.getSpeed(),IVspeed);
+        this.total = this.level+this.expPoints+this.hp+this.attack+this.defense+this.spAttack+this.spDefense+this.speed;
+    }
+
 
     @Override
     public String toString() {

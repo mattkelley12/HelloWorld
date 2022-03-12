@@ -3,6 +3,7 @@ package PalletTown;
 import DAO.EvolutionDAO;
 import DAO.MoveDAO;
 import DAO.PokemonDAO;
+import Pokemon.Pokemon;
 import Services.EvolutionService;
 import Services.MoveService;
 import Services.PokemonService;
@@ -10,15 +11,27 @@ import Services.PokemonService;
 public class PalletTown {
 
     public static void main(String[] args) {
-        PokemonService pokedex = new PokemonService("pokemonComplete.csv");
-        EvolutionService evoService = new EvolutionService("gen1Evolutions.csv");
-        MoveService moveService = new MoveService("moves.csv");
+        PokemonService pokedex = new PokemonService();
 
-        System.out.println(evoService.getEvolution(1));
+        Pokemon charmander = pokedex.getPokemon("Charmander",15);
+        Pokemon bulbasaur = pokedex.getPokemon("Bulbasaur",15);
+
+        System.out.println(charmander.toString());
+        charmander.levelUp(1);
+        System.out.println(charmander.toString());
+
+        System.out.println(bulbasaur.toString());
+        bulbasaur.levelUp(1);
+        System.out.println(bulbasaur.toString());
+
 
     }
 
 }
+
+//        System.out.println(evoService.getEvolution(1));
+//System.out.println(moveService.getMove("Hyper Beam"));
+
 
 //        Pokemon penis1 = new Pokemon(pokedex.getPokemon("Charmander"),16);
 //        Pokemon penis2 = new Pokemon(pokedex.getPokemon("Charmander"),16);
