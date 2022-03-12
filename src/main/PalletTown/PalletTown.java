@@ -1,6 +1,8 @@
 package PalletTown;
 
-import Pokemon.Pokemon;
+import DAO.EvolutionDAO;
+import DAO.MoveDAO;
+import DAO.PokemonDAO;
 import Services.EvolutionService;
 import Services.MoveService;
 import Services.PokemonService;
@@ -8,11 +10,11 @@ import Services.PokemonService;
 public class PalletTown {
 
     public static void main(String[] args) {
-        PokemonService pokedex = new PokemonService();
+        PokemonService pokedex = new PokemonService("pokemonComplete.csv");
         EvolutionService evoService = new EvolutionService("gen1Evolutions.csv");
         MoveService moveService = new MoveService("moves.csv");
 
-        System.out.println(evoService.getEvolution(133));
+        System.out.println(evoService.getEvolution(1));
 
     }
 
