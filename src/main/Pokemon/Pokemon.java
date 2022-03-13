@@ -3,7 +3,8 @@ package Pokemon;
 import Services.EvolutionService;
 import Services.MoveService;
 import Services.PokemonService;
-import java.util.Random;
+
+import java.util.*;
 
 public class Pokemon {
     // Standard Stats
@@ -43,11 +44,14 @@ public class Pokemon {
     private int spDefense;
     private int speed;
 
+    // Moves
+    private Move[] moves = new Move[4];
+
     public Pokemon(PokemonBase pokemonBase, int level, EvolutionService evolutionService, PokemonService pokedex){
         // Standard Stats
         this.pokemonBase = pokemonBase;
         this.evolutionService = evolutionService;
-        this.moveService = moveService;
+        this.moveService = pokedex.getMoveService();
         this.pokedex = pokedex;
         this.pokedexNumber = pokemonBase.getPokedexNumber();
         this.name = pokemonBase.getName();
@@ -76,6 +80,7 @@ public class Pokemon {
         this.spDefense = LevelUp.levelUpStat(5,level-5,pokemonBase.getSpDefense(),IVspDefense);
         this.speed = LevelUp.levelUpStat(5,level-5,pokemonBase.getSpeed(),IVspeed);
         this.total = this.level+this.expPoints+this.hp+this.attack+this.defense+this.spAttack+this.spDefense+this.speed;
+        this.moves = setMoves(level);
     }
 
     // Helper Methods
@@ -103,6 +108,69 @@ public class Pokemon {
     }
     private int getExpPoints(int level){
         return (int) Math.pow(level,3);
+    }
+
+    // Default of last four moves learned by Pokemon
+    private Move[] setMoves(int level){
+        Move[] moves = new Move[4];
+        // Get moveSet for pokemon
+        HashMap<Integer, ArrayList<Integer>> moveMapping = pokedex.getMoveMapping().get(pokedexNumber).getMoveMapping();
+        // Get sorted list of levels pokemon learns moves
+        ArrayList<Integer> levels = new ArrayList<>(moveMapping.keySet());
+        Collections.sort(levels);
+        // Iterate through last four moves and set to current moves
+        int movesLearned = 0;
+        int i = levels.size()-1;
+        int currentLevel;
+        ArrayList<Integer> currentMoves;
+        while (i >= 0 && movesLearned < 4){
+
+
+            currentLevel = levels.get(i);
+            // Only try to assign moves if moves are less than current level
+            if (currentLevel <= level && currentLevel > 0) {
+                // Current moveSet @ currentLevel
+                currentMoves = moveMapping.get(currentLevel);
+                // Iterate backwards through moves to preserve order
+                for (int j = currentMoves.size() - 1; j >= 0; j--) {
+                    int currentMove = currentMoves.get(j);
+                    if (currentMove != -1) {
+                        // Check if duplicate move
+                        boolean moveExists = false;
+                        for (Move move :
+                                moves) {
+                            if (move != null && move.getID() == currentMove){
+                                moveExists = true;
+                                break;
+                            }
+                        }
+                        if (!moveExists) {
+                            moves[3 - movesLearned] = moveService.getMove(currentMove);
+                            movesLearned++;
+                        }
+                    }
+                    if (movesLearned == 4){
+                        break;
+                    }
+                }
+            }
+            i--;
+        }
+
+        // Realign moves if less than 4
+        // Find first non-null value in array
+        int pointer = 0;
+        while (moves[pointer] == null){
+            pointer++;
+        }
+        // Move values to new array
+        Move[] alignedMoves = new Move[4];
+        int nextEmpty = 0;
+        for (int j = pointer; j < moves.length; j++) {
+            alignedMoves[nextEmpty] = moves[j];
+            nextEmpty++;
+        }
+        return alignedMoves;
     }
 
     public int getPokedexNumber() {
@@ -233,6 +301,24 @@ public class Pokemon {
         this.total = this.level+this.expPoints+this.hp+this.attack+this.defense+this.spAttack+this.spDefense+this.speed;
     }
 
+    public String getMoves() {
+        StringBuilder moveSet = new StringBuilder();
+        moveSet.append(String.format("%s Level %s Moves",name, level));
+        moveSet.append(System.getProperty("line.separator"));
+        for (int i = 0; i < moves.length; i++) {
+            String currentMove;
+            if (moves[i] == null){
+                currentMove = "Empty";
+            }
+            else {
+                currentMove = moves[i].getName();
+            }
+            moveSet.append(String.format("Move %d : %s",i+1, currentMove));
+            moveSet.append(System.getProperty("line.separator"));
+        }
+        return moveSet.toString();
+    }
+
     // Private methods
 
     private void evolve(Evolution evolution) {
@@ -264,18 +350,31 @@ public class Pokemon {
     @Override
     public String toString() {
         return "Pokemon{" +
-                "name='" + name + '\'' +
+                "pokedexNumber=" + pokedexNumber +
+                ", name='" + name + '\'' +
                 ", type1='" + type1 + '\'' +
                 ", type2='" + type2 + '\'' +
+                ", generation=" + generation +
+                ", legendary=" + legendary +
                 ", gender='" + gender + '\'' +
+                ", trainerID=" + trainerID +
+                ", isShiny=" + isShiny +
+                "\n, IVhp=" + IVhp +
+                ", IVattack=" + IVattack +
+                ", IVdefense=" + IVdefense +
+                ", IVspAttack=" + IVspAttack +
+                ", IVspDefense=" + IVspDefense +
+                ", IVspeed=" + IVspeed +
                 ", level=" + level +
+                ", expPoints=" + expPoints +
+                ", total=" + total +
                 ", hp=" + hp +
                 ", attack=" + attack +
                 ", defense=" + defense +
                 ", spAttack=" + spAttack +
                 ", spDefense=" + spDefense +
                 ", speed=" + speed +
-                ", shiny=" + isShiny +
+                ", \nmoves=" + Arrays.toString(moves) +
                 '}';
     }
 }

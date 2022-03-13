@@ -14,7 +14,10 @@ public class PalletTown {
     public static void main(String[] args) {
         PokemonService pokedex = new PokemonService();
 
-//        Pokemon charmander = pokedex.getPokemon("Charmander",15);
+        Pokemon charmander = pokedex.getPokemon("Charmeleon",16);
+        System.out.println(charmander.getPokedexNumber());
+        //System.out.println(charmander.toString());
+        System.out.println(charmander.getMoves());
 //        Pokemon bulbasaur = pokedex.getPokemon("Bulbasaur",15);
 //
 //        System.out.println(charmander.toString());
@@ -26,10 +29,6 @@ public class PalletTown {
 //        System.out.println(bulbasaur.toString());
 //        bulbasaur.levelUp(1);
 //        System.out.println(bulbasaur.toString());
-
-        PokemonMoveSet test = pokedex.getMoveMapping().get(1);
-        System.out.println(test.movesByLevelUp());
-        System.out.println(test.movesByTeach());
 
 
     }
