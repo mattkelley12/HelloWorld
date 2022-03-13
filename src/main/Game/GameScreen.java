@@ -5,8 +5,6 @@ import Sprites.Sprite;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
@@ -32,19 +30,12 @@ public class GameScreen extends JPanel {
                 g.drawImage(sprites.get("wildGrass").getImg(), i, j,null);
             }
         }
-
+       callFPS();
     }
 
-    public static void main(String[] args) {
-        Game game = new Game();
+    private void callFPS() {
+
+
 
     }
-
-    // Paint Default Area
-    public void paintDefaultArea(Graphics g){
-        super.paintComponent(g);
-
-    }
-
-
 }
