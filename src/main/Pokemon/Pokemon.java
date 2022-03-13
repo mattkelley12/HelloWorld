@@ -83,7 +83,7 @@ public class Pokemon {
         this.moves = setMoves(level);
     }
 
-    // Helper Methods
+    // Helper Methods for Constructor
     private String generateGender(double percentageMale){
         // Return null if genderless
         if (percentageMale == -1){
@@ -173,6 +173,8 @@ public class Pokemon {
         return alignedMoves;
     }
 
+
+    // Getter and Setters
     public int getPokedexNumber() {
         return pokedexNumber;
     }
@@ -273,7 +275,7 @@ public class Pokemon {
         return pokemonBase;
     }
 
-    // Methods
+    // Public Methods
 
     public void levelUp(int numLevels){
         // Do nothing if level 100
@@ -347,6 +349,7 @@ public class Pokemon {
     }
 
 
+    // Overrides
     @Override
     public String toString() {
         return "Pokemon{" +
