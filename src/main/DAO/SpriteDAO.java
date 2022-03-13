@@ -17,7 +17,7 @@ public class SpriteDAO {
     public HashMap<String, Sprite> getTileSet(){
         // Get img
         String spriteMaster = "/Sprites/tilesets.png";
-        String spriteCSV = "/Sprites/tileSetData.csv";
+        String spriteCSV = "tileSetData.csv";
         BufferedImage img = importImg(spriteMaster);
         // Return Value
         HashMap<String,Sprite> sprites = new HashMap<>();
@@ -25,8 +25,8 @@ public class SpriteDAO {
         List<List<String>> spriteStringArray = new csvDAO(spriteCSV).readFile();
 
         // Parse tileSet
-        for (List<String> spriteData:
-        spriteStringArray){
+        for (int i = 1; i < spriteStringArray.size(); i++){
+            List<String> spriteData = spriteStringArray.get(i);
             String name = spriteData.get(0);
             int x = Integer.parseInt(spriteData.get(1));
             int y = Integer.parseInt(spriteData.get(2));
