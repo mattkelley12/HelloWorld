@@ -28,7 +28,8 @@ public class PalletTown {
 //        System.out.println(bulbasaur.toString());
 
         PokemonMoveSet test = pokedex.getMoveMapping().get(1);
-        System.out.println(test.toString());
+        System.out.println(test.movesByLevelUp());
+        System.out.println(test.movesByTeach());
 
 
     }
