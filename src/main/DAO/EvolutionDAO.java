@@ -10,7 +10,7 @@ public class EvolutionDAO {
 
     // Initialize pokedex
     public static HashMap<Integer, Evolution> evolutionInitialize(String fileName){
-        List<List<String>> evolutionArray = new csvDAO(fileName).readPokedexFile();
+        List<List<String>> evolutionArray = new csvDAO(fileName).readFile();
         // Initialize HashMap/Dictionary
         HashMap<Integer, Evolution> evolutionHashMap = new HashMap<>();
 

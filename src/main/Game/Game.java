@@ -1,51 +1,26 @@
 package Game;
 
-import javax.imageio.ImageIO;
+import DAO.SpriteDAO;
+import Sprites.Sprite;
+
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.HashMap;
 
 public class Game extends JFrame {
 
     private GameScreen gameScreen;
     private BufferedImage img;
 
-
     public Game(){
-        importImg("tilesets.png");
-
-        setSize(640,640);
-        setVisible(true);
+        setSize(480,320);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        gameScreen = new GameScreen();
+        gameScreen = new GameScreen(img);
         add(gameScreen);
+        setVisible(true);
 
-    }
-
-    private void importImg(String fileName) {
-        InputStream is = this.getFileAsIOStream(fileName);
-        try {
-            this.img = ImageIO.read(is);
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    private InputStream getFileAsIOStream(final String fileName)
-    {
-        InputStream ioStream = this.getClass()
-                .getClassLoader()
-                .getResourceAsStream(fileName);
-
-        if (ioStream == null) {
-            throw new IllegalArgumentException(fileName + " is not found");
-        }
-        return ioStream;
     }
 
 

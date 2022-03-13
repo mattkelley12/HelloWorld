@@ -21,7 +21,7 @@ public class csvDAO {
         return new InputStreamReader(is);
     }
 
-    public List<List<String>> readPokedexFile() {
+    public List<List<String>> readFile() {
         // Initialize list
         List<List<String>> pokedex = new ArrayList<>();
 

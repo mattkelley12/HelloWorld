@@ -20,7 +20,7 @@ public class MoveDAO {
 
     // Initialize pokedex
     public static HashMap<String, Move> moveInitialize(String fileName){
-        List<List<String>> evolutionArray = new csvDAO(fileName).readPokedexFile();
+        List<List<String>> evolutionArray = new csvDAO(fileName).readFile();
         // Initialize HashMap/Dictionary
         HashMap<String, Move> moveHashMap = new HashMap<>();
 
@@ -153,7 +153,7 @@ public class MoveDAO {
     }
 
     public static HashMap<Integer, PokemonMoveSet> moveMapping(String fileName, HashMap<Integer, PokemonBase> pokedexByNumber, MoveService moveService) {
-        List<List<String>> moveMappingStringArray = new csvDAO(fileName).readPokedexFile();
+        List<List<String>> moveMappingStringArray = new csvDAO(fileName).readFile();
         //     PokeDex#            Level        Moveset
         HashMap<Integer, PokemonMoveSet> moveMapping = new HashMap<>();
 

@@ -8,7 +8,7 @@ public class PokemonDAO {
 
     // Initialize pokedex
     public static HashMap<String, PokemonBase> pokedexInitialize(String fileName){
-        List<List<String>> pokedexArray = new csvDAO(fileName).readPokedexFile();
+        List<List<String>> pokedexArray = new csvDAO(fileName).readFile();
         // Initialize HashMap/Dictionary
         HashMap<String, PokemonBase> pokedex = new HashMap<>();
 
