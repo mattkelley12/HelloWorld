@@ -72,7 +72,7 @@ public class Pokemon {
         this.IVspeed = generateIV();
         // Battle Stats
         this.level = level;
-        this.expPoints = getExpPoints(level);
+        this.expPoints = LevelUp.getExpPoints(level,pokemonBase.getExperienceGrowth());
         this.hp = LevelUp.levelUpHP(5,level-5,pokemonBase.getHp(),IVspeed);
         this.attack = LevelUp.levelUpStat(5,level-5,pokemonBase.getAttack(),IVattack);
         this.defense = LevelUp.levelUpStat(5,level-5,pokemonBase.getDefense(),IVdefense);
@@ -105,9 +105,6 @@ public class Pokemon {
     private int generateIV(){
         int random = new Random().nextInt(32);
         return random;
-    }
-    private int getExpPoints(int level){
-        return (int) Math.pow(level,3);
     }
 
     // Default of last four moves learned by Pokemon
@@ -303,6 +300,22 @@ public class Pokemon {
         this.total = this.level+this.expPoints+this.hp+this.attack+this.defense+this.spAttack+this.spDefense+this.speed;
     }
 
+    public int gainExperience(int expPoints){
+        long growthRate = pokemonBase.getExperienceGrowth();
+        // Check if already max level
+        if (this.expPoints == growthRate){
+            return 0;
+        }
+        this.expPoints+= expPoints;
+        // Handle max condition for experience
+        if (this.expPoints > growthRate){
+            this.expPoints = (int) growthRate;
+        }
+        int numLevels = LevelUp.checkLevelUp(level,this.expPoints,growthRate);
+        this.levelUp(numLevels);
+        return numLevels;
+    }
+
     public String getMoves() {
         StringBuilder moveSet = new StringBuilder();
         moveSet.append(String.format("%s Level %s Moves",name, level));
@@ -357,17 +370,6 @@ public class Pokemon {
                 ", name='" + name + '\'' +
                 ", type1='" + type1 + '\'' +
                 ", type2='" + type2 + '\'' +
-                ", generation=" + generation +
-                ", legendary=" + legendary +
-                ", gender='" + gender + '\'' +
-                ", trainerID=" + trainerID +
-                ", isShiny=" + isShiny +
-                "\n, IVhp=" + IVhp +
-                ", IVattack=" + IVattack +
-                ", IVdefense=" + IVdefense +
-                ", IVspAttack=" + IVspAttack +
-                ", IVspDefense=" + IVspDefense +
-                ", IVspeed=" + IVspeed +
                 ", level=" + level +
                 ", expPoints=" + expPoints +
                 ", total=" + total +
@@ -377,7 +379,6 @@ public class Pokemon {
                 ", spAttack=" + spAttack +
                 ", spDefense=" + spDefense +
                 ", speed=" + speed +
-                ", \nmoves=" + Arrays.toString(moves) +
                 '}';
     }
 }

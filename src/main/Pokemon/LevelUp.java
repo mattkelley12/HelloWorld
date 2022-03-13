@@ -28,4 +28,44 @@ public class LevelUp {
         return  newStat;
     }
 
+    public static int checkLevelUp(int level, int expPoints, long growthRate){
+        int levelUp = 0;
+        boolean calcComplete = false;
+        while (!calcComplete) {
+            int requiredExp = getExpPoints(level+1, growthRate);
+
+            if (requiredExp > expPoints) {
+                calcComplete = true;
+            }
+            else {
+                levelUp++;
+                level++;
+            }
+        }
+        return levelUp;
+    }
+
+    public static int getExpPoints(int level, long growthRate){
+        double requiredExp;
+        switch ((int) growthRate) {
+            case 800000:
+                requiredExp = ((int) 4.0 / 5.0 * Math.pow(level, 3));
+                break;
+            case 1000000:
+                requiredExp = Math.pow(level, 3);
+                break;
+            case 1059860:
+                requiredExp = (6.0 / 5.0) * Math.pow(level, 3.0) - (15.0 * Math.pow(level, 2.0)) + (100.0 * level) - 140.0;
+                break;
+            case 1250000:
+                requiredExp = (5.0 / 4.0 * Math.pow(level, 3.0));
+                break;
+            default:
+                throw new IllegalArgumentException("Growth rate does not exist");
+        }
+        return (int) requiredExp;
+    }
+
+
+
 }

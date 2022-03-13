@@ -22,7 +22,7 @@ public class EvolutionService {
     public boolean evolvesNextLevel(int pokemonNumber, int nextLevel){
         Evolution pokemonEvo = evolutionHashMap.get(pokemonNumber);
         // If Pokemon does not have evolution
-        if (pokemonEvo == null){
+        if (pokemonEvo == null || pokemonEvo.isTrade() == true || pokemonEvo.getStone().size() > 0){
             return false;
         }
         // If next level is evo level
