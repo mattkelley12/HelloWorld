@@ -12,8 +12,7 @@ public class GameScreen extends JPanel {
     private BufferedImage img;
     private HashMap<String, Sprite> sprites;
 
-    public GameScreen(BufferedImage img){
-        this.img = img;
+    public GameScreen(){
         this.sprites = new SpriteDAO().getTileSet();
     }
 
