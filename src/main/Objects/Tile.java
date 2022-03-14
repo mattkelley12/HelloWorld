@@ -1,20 +1,20 @@
-package Sprites;
+package Objects;
 
 import java.awt.image.BufferedImage;
 
-public class Sprite {
+public class Tile {
     private String name;
     private int width;
     private int height;
     private boolean canMove;
     private BufferedImage img;
 
-    public Sprite(String name, int width, int height, boolean canMove, BufferedImage img) {
+    public Tile(String name, int width, int height, boolean canMove, BufferedImage sprite ) {
         this.name = name;
         this.width = width;
         this.height = height;
         this.canMove = canMove;
-        this.img = img;
+        this.img = sprite;
     }
 
     public String getName() {
@@ -32,7 +32,8 @@ public class Sprite {
     public boolean isCanMove() {
         return canMove;
     }
-    public BufferedImage getImg(){
+
+    public BufferedImage getSprite(){
         return img;
     }
 }

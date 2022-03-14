@@ -5,16 +5,15 @@ import Inputs.KeyBoardListener;
 import Scenes.Battle;
 import Scenes.Menu;
 import Scenes.World;
-import Sprites.Sprite;
+import Objects.Tile;
 
 import javax.swing.*;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Game extends JFrame implements Runnable {
     // Instance Variables
     private GameScreen gameScreen;
-    private KeyBoardListener keyBoardListener;
-    private HashMap<String, Sprite> sprites;
+    private ArrayList<Tile> sprites;
     private Render render;
     private Menu menu;
     private Battle battle;
@@ -28,6 +27,7 @@ public class Game extends JFrame implements Runnable {
     public Game(){
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(false);
         initClasses();
         // Setup Screen
         add(gameScreen);
@@ -50,7 +50,7 @@ public class Game extends JFrame implements Runnable {
 
     public static void main(String[] args) {
         Game game = new Game();
-        game.initInputs();
+        game.gameScreen.initInputs();
         game.start();
     }
 
@@ -95,13 +95,6 @@ public class Game extends JFrame implements Runnable {
         }
     }
 
-    // Inputs
-    private void initInputs(){
-        keyBoardListener = new KeyBoardListener();
-        addKeyListener(keyBoardListener);
-        requestFocus();
-    }
-
     // Getters and setters
     public Render getRender(){
         return this.render;
@@ -118,7 +111,7 @@ public class Game extends JFrame implements Runnable {
     public World getWorld() {
         return world;
     }
-    public HashMap<String, Sprite> getSprites(){
+    public ArrayList<Tile> getSprites(){
         return sprites;
     }
 }

@@ -1,6 +1,6 @@
 package DAO;
 
-import Sprites.Sprite;
+import Objects.Tile;
 
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
@@ -8,19 +8,21 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SpriteDAO {
+public class  SpriteDAO {
 
     // Get tileSet
-    public HashMap<String, Sprite> getTileSet(){
+    public ArrayList<Tile> getTileSet(){
         // Get img
-        String spriteMaster = "/Sprites/tilesets.png";
+        String spriteMaster = "/Objects/tilesets.png";
         String spriteCSV = "tileSetData.csv";
         BufferedImage img = importImg(spriteMaster);
         // Return Value
-        HashMap<String,Sprite> sprites = new HashMap<>();
+        ArrayList<Tile> sprites = new ArrayList<>();
         // Get CSV Data
         List<List<String>> spriteStringArray = new csvDAO(spriteCSV).readFile();
 
@@ -34,8 +36,9 @@ public class SpriteDAO {
             int height = Integer.parseInt(spriteData.get(4));
             BufferedImage currentImg = reScaleImage(img.getSubimage(x,y,width,height));
             boolean canMove = Boolean.parseBoolean(spriteData.get(5));
-            Sprite currentSprite = new Sprite(name,width,height,canMove,currentImg);
-            sprites.put(name,currentSprite);
+            int id = Integer.parseInt(spriteData.get(6));
+            Tile currentSprite = new Tile(name,width,height,canMove,currentImg);
+            sprites.add(id,currentSprite);
         }
         return sprites;
     }

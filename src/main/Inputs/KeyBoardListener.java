@@ -9,6 +9,12 @@ import java.awt.event.KeyListener;
 import static Game.GameStates.*;
 
 public class KeyBoardListener implements KeyListener {
+    private Game game;
+
+    public KeyBoardListener(Game game){
+        this.game = game;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
